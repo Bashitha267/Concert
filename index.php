@@ -113,12 +113,14 @@ try {
 
         <!-- Big Concert Images Collage/Background Grid -->
         <div class="hero-bg-strip">
-            <img src="assests/images (11).jpg" alt="">
+            <img src="assests/images (11).jpg" alt=""  class="hidden sm:block">
+              <img src="assests/images (15).jpg" alt=""   class="hidden sm:block">
+            <img src="assests/images (12).jpg" alt="" >
+
             <img src="assests/images (13).jpg" alt="">
             <img src="assests/channels4_profile.jpg" alt="">
-            <img src="assests/images (12).jpg" alt="" class="hidden sm:block">
             <img src="assests/images (14).jpg" alt="" class="hidden sm:block">
-            <img src="assests/images (15).jpg" alt="" class="hidden sm:block">
+          
         </div>
 
         <!-- Dark gradient overlay so text stays readable -->
@@ -162,9 +164,9 @@ try {
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             <?php 
             $packageImages = [
-                'GN' => 'assests/images (12).jpg',
+                'GN' => 'assests/images (14).jpg',
                 'VP' => 'assests/images (11).jpg',
-                'VV' => 'assests/images (13).jpg'
+                'VV' => 'assests/images (15).jpg'
             ];
             foreach ($packages as $code => $pkg): 
             ?>
@@ -179,12 +181,12 @@ try {
                     $accentColor = 'text-violet-400';
                     $borderColor = 'border-violet-500/30 hover:border-violet-500/70 shadow-lg shadow-violet-500/5';
                     $btnColor = 'bg-accentViolet hover:bg-violet-500 text-white';
-                    $badge = '<span class="absolute top-4 right-4 px-3 py-1 bg-violet-500/25 border border-violet-500/40 text-violet-300 text-xs font-semibold rounded-full uppercase">Most Popular</span>';
+                    $badge = '<span class="z-10  absolute top-4 right-4 px-3 py-1 bg-violet-500/25 border border-violet-500/40 text-violet-300 text-xs font-semibold rounded-full uppercase">Most Popular</span>';
                 } elseif ($code === 'VV') {
                     $accentColor = 'text-amber-400';
                     $borderColor = 'border-amber-500/20 hover:border-amber-500/50 shadow-lg shadow-amber-500/5';
                     $btnColor = 'bg-gradient-to-r from-amber-500 to-violet-600 hover:from-amber-400 hover:to-violet-500 text-black font-extrabold';
-                    $badge = '<span class="absolute top-4 right-4 px-3 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold rounded-full uppercase">Ultra Premium</span>';
+                    $badge = '<span class="z-10  absolute top-4 right-4 px-3 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold rounded-full uppercase opacity-100">Ultra Premium</span>';
                 }
                 ?>
                 <div class="relative flex flex-col justify-between rounded-3xl glass-panel p-6 sm:p-8 border <?php echo $borderColor; ?> transition-all duration-300 hover:-translate-y-2">
