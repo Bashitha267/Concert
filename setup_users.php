@@ -19,16 +19,18 @@ try {
     ");
     $messages[] = ['ok', 'users table created (or already exists).'];
 
-    // Insert default admin (password: admin123)
+    // ALWAYS force-set admin password to admin123 (fixes wrong hash from SQL import)
     $hashed = password_hash('admin123', PASSWORD_BCRYPT);
-    $stmt = $db->prepare("INSERT IGNORE INTO users (username, password) VALUES (?, ?)");
+
+    // Use INSERT ... ON DUPLICATE KEY UPDATE to upsert correctly
+    $stmt = $db->prepare("
+        INSERT INTO users (username, password)
+        VALUES (?, ?)
+        ON DUPLICATE KEY UPDATE password = VALUES(password)
+    ");
     $stmt->execute(['admin', $hashed]);
 
-    if ($stmt->rowCount() > 0) {
-        $messages[] = ['ok', 'Admin account created: username=<strong>admin</strong>, password=<strong>admin123</strong>'];
-    } else {
-        $messages[] = ['info', 'Admin account already exists. Skipped insert.'];
-    }
+    $messages[] = ['ok', 'Admin password reset to: username=<strong>admin</strong>, password=<strong>admin123</strong>'];
 
 } catch (Exception $e) {
     $messages[] = ['error', 'Error: ' . $e->getMessage()];

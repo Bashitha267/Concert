@@ -211,30 +211,34 @@ try {
 
     <!-- Top Admin Header -->
     <header class="bg-gradient-to-r from-adminPurple to-purple-900 text-white shadow-lg sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <span class="font-syne text-2xl font-black tracking-widest text-white">INZANITY</span>
-                <span class="bg-white/10 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Control Panel</span>
+                <span class="font-syne text-xl font-black tracking-widest text-white">INZANITY</span>
+                <span class="bg-white/10 px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider hidden sm:inline">Control Panel</span>
             </div>
-            
-            <div class="flex items-center gap-3 flex-wrap justify-center">
-                <a href="mark.php" class="bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-md">
-                    Scanner (Mark Attendance)
-                </a>
-                <a href="../index.php" target="_blank" class="text-xs text-gray-300 hover:text-white transition-all">
-                    View Live Site &rarr;
-                </a>
-                <button onclick="openCredModal()" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+
+            <div class="flex items-center gap-2">
+                <!-- Scanner (Camera Icon) -->
+                <a href="mark.php" title="Scanner" class="group flex items-center justify-center w-10 h-10 bg-violet-600 hover:bg-violet-500 rounded-xl transition-all shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    Edit Credentials
+                </a>
+
+                <!-- Settings (Gear Icon) -->
+                <button onclick="openCredModal()" title="Settings" class="flex items-center justify-center w-10 h-10 bg-white/10 hover:bg-white/20 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
                 </button>
-                <a href="logout.php" class="flex items-center gap-1.5 bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                <!-- Logout Icon -->
+                <a href="logout.php" title="Logout" class="flex items-center justify-center w-10 h-10 bg-rose-600/80 hover:bg-rose-600 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
-                    Logout
                 </a>
             </div>
         </div>
@@ -279,41 +283,30 @@ try {
             </div>
         <?php endif; ?>
 
-        <!-- Package Statistics Grid (3 boxes: VIP, VVIP, General) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <!-- VVIP Box -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between">
-                <div>
-                    <span class="text-xs uppercase font-extrabold tracking-widest text-amber-500">VVIP Packages</span>
-                    <h3 class="text-4xl font-extrabold text-gray-900 mt-2"><?php echo $stats['VV']['approved']; ?> <span class="text-xs font-normal text-gray-500">seats booked</span></h3>
-                </div>
-                <div class="mt-4 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-500">
-                    <span>Total Requests: <?php echo $stats['VV']['total']; ?></span>
-                    <span>Max Capacity: 30</span>
+        <!-- Compact Stats Row -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6 flex divide-x divide-gray-100 overflow-hidden">
+            <!-- VVIP -->
+            <div class="flex-1 flex items-center gap-3 px-4 py-4">
+                <span class="w-2 h-8 rounded-full bg-amber-400 shrink-0"></span>
+                <div class="min-w-0">
+                    <p class="text-xs font-bold text-amber-500 uppercase tracking-wider truncate">VVIP</p>
+                    <p class="text-2xl font-extrabold text-gray-900 leading-none"><?php echo $stats['VV']['approved']; ?><span class="text-xs font-normal text-gray-400 ml-1">/ 30</span></p>
                 </div>
             </div>
-
-            <!-- VIP Box -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between">
-                <div>
-                    <span class="text-xs uppercase font-extrabold tracking-widest text-violet-600">VIP Packages</span>
-                    <h3 class="text-4xl font-extrabold text-gray-900 mt-2"><?php echo $stats['VP']['approved']; ?> <span class="text-xs font-normal text-gray-500">seats booked</span></h3>
-                </div>
-                <div class="mt-4 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-500">
-                    <span>Total Requests: <?php echo $stats['VP']['total']; ?></span>
-                    <span>Max Capacity: 50</span>
+            <!-- VIP -->
+            <div class="flex-1 flex items-center gap-3 px-4 py-4">
+                <span class="w-2 h-8 rounded-full bg-violet-500 shrink-0"></span>
+                <div class="min-w-0">
+                    <p class="text-xs font-bold text-violet-600 uppercase tracking-wider truncate">VIP</p>
+                    <p class="text-2xl font-extrabold text-gray-900 leading-none"><?php echo $stats['VP']['approved']; ?><span class="text-xs font-normal text-gray-400 ml-1">/ 50</span></p>
                 </div>
             </div>
-
-            <!-- General Box -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between">
-                <div>
-                    <span class="text-xs uppercase font-extrabold tracking-widest text-blue-500">General Packages</span>
-                    <h3 class="text-4xl font-extrabold text-gray-900 mt-2"><?php echo $stats['GN']['approved']; ?> <span class="text-xs font-normal text-gray-500">seats booked</span></h3>
-                </div>
-                <div class="mt-4 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-500">
-                    <span>Total Requests: <?php echo $stats['GN']['total']; ?></span>
-                    <span>Max Capacity: 200</span>
+            <!-- General -->
+            <div class="flex-1 flex items-center gap-3 px-4 py-4">
+                <span class="w-2 h-8 rounded-full bg-blue-400 shrink-0"></span>
+                <div class="min-w-0">
+                    <p class="text-xs font-bold text-blue-500 uppercase tracking-wider truncate">General</p>
+                    <p class="text-2xl font-extrabold text-gray-900 leading-none"><?php echo $stats['GN']['approved']; ?><span class="text-xs font-normal text-gray-400 ml-1">/ 200</span></p>
                 </div>
             </div>
         </div>
@@ -356,30 +349,32 @@ try {
             </form>
         </div>
 
-        <!-- Bookings Table Container -->
+        <!-- Bookings Section -->
         <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-50 flex justify-between items-center flex-wrap gap-2 bg-gray-50/50">
-                <h3 class="font-syne text-lg font-bold text-gray-900">Registration Requests</h3>
+            <div class="px-4 sm:px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                <h3 class="font-syne text-base sm:text-lg font-bold text-gray-900">Registration Requests</h3>
                 <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-medium">Total: <?php echo count($bookingsList); ?></span>
             </div>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-wider bg-gray-50/20">
-                            <th class="px-6 py-4">Ref ID</th>
-                            <th class="px-6 py-4">Name</th>
-                            <th class="px-6 py-4">NIC</th>
-                            <th class="px-6 py-4">WhatsApp</th>
-                            <th class="px-6 py-4">Package</th>
-                            <th class="px-6 py-4 text-center">Seats</th>
-                            <th class="px-6 py-4">Receipt</th>
-                            <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50 text-sm">
-                        <?php if (count($bookingsList) > 0): ?>
+
+            <?php if (count($bookingsList) > 0): ?>
+
+                <!-- DESKTOP TABLE (hidden on mobile) -->
+                <div class="hidden md:block overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-100 text-xs font-bold text-gray-400 uppercase tracking-wider bg-gray-50/20">
+                                <th class="px-6 py-4">Ref ID</th>
+                                <th class="px-6 py-4">Name</th>
+                                <th class="px-6 py-4">NIC</th>
+                                <th class="px-6 py-4">WhatsApp</th>
+                                <th class="px-6 py-4">Package</th>
+                                <th class="px-6 py-4 text-center">Seats</th>
+                                <th class="px-6 py-4">Receipt</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50 text-sm">
                             <?php foreach ($bookingsList as $b): ?>
                                 <tr class="hover:bg-gray-50/50 transition-colors">
                                     <td class="px-6 py-4 font-bold text-adminPurple font-syne"><?php echo htmlspecialchars($b['booking_ref']); ?></td>
@@ -392,7 +387,7 @@ try {
                                     </td>
                                     <td class="px-6 py-4">
                                         <span class="text-xs px-2.5 py-1 rounded-md font-semibold
-                                            <?php 
+                                            <?php
                                             if ($b['package_code'] === 'VV') echo 'bg-amber-100 text-amber-800';
                                             elseif ($b['package_code'] === 'VP') echo 'bg-violet-100 text-violet-800';
                                             else echo 'bg-blue-100 text-blue-800';
@@ -474,7 +469,7 @@ try {
                                                 <input type="hidden" name="booking_id" value="<?php echo $b['id']; ?>">
                                                 <input type="hidden" name="action" value="delete">
                                                 <button type="submit" class="text-rose-600 hover:bg-rose-50 hover:text-rose-700 p-1.5 rounded-lg transition-all">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
                                                 </button>
@@ -483,16 +478,106 @@ try {
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="9" class="px-6 py-12 text-center text-gray-400">
-                                    No booking requests found matching filters.
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MOBILE CARDS (shown only on mobile) -->
+                <div class="md:hidden divide-y divide-gray-100">
+                    <?php foreach ($bookingsList as $b): ?>
+                        <div class="p-4">
+                            <!-- Card Header -->
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <p class="font-syne font-bold text-adminPurple text-sm"><?php echo htmlspecialchars($b['booking_ref']); ?></p>
+                                    <p class="font-semibold text-gray-900 text-sm mt-0.5"><?php echo htmlspecialchars($b['name']); ?></p>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs px-2 py-1 rounded-md font-semibold
+                                        <?php
+                                        if ($b['package_code'] === 'VV') echo 'bg-amber-100 text-amber-800';
+                                        elseif ($b['package_code'] === 'VP') echo 'bg-violet-100 text-violet-800';
+                                        else echo 'bg-blue-100 text-blue-800';
+                                        ?>">
+                                        <?php echo htmlspecialchars($b['package_name']); ?>
+                                    </span>
+                                    <?php if ($b['status'] === 'pending'): ?>
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>Pending
+                                        </span>
+                                    <?php elseif ($b['status'] === 'approved'): ?>
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Approved
+                                        </span>
+                                    <?php else: ?>
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-800">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Rejected
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <!-- Card Details -->
+                            <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-500 mb-3">
+                                <div><span class="font-semibold text-gray-700">NIC:</span> <?php echo htmlspecialchars($b['nic']); ?></div>
+                                <div><span class="font-semibold text-gray-700">Seats:</span> <?php echo $b['seats']; ?></div>
+                                <div class="col-span-2">
+                                    <span class="font-semibold text-gray-700">WhatsApp:</span>
+                                    <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $b['whatsapp']); ?>" target="_blank" class="text-adminAccent hover:underline ml-1"><?php echo htmlspecialchars($b['whatsapp']); ?></a>
+                                </div>
+                            </div>
+
+                            <!-- Card Actions -->
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="viewReceipt('../<?php echo htmlspecialchars($b['receipt_path']); ?>', '<?php echo htmlspecialchars($b['booking_ref']); ?>')"
+                                        class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold px-3 py-2 rounded-lg transition-all">
+                                    View Receipt
+                                </button>
+
+                                <?php if ($b['status'] === 'pending'): ?>
+                                    <form method="POST" onsubmit="return confirm('Approve this request?');">
+                                        <input type="hidden" name="booking_id" value="<?php echo $b['id']; ?>">
+                                        <input type="hidden" name="action" value="approve">
+                                        <button type="submit" class="bg-emerald-600 text-white text-xs font-bold px-3 py-2 rounded-lg">Approve</button>
+                                    </form>
+                                    <form method="POST" onsubmit="return confirm('Reject this request?');">
+                                        <input type="hidden" name="booking_id" value="<?php echo $b['id']; ?>">
+                                        <input type="hidden" name="action" value="reject">
+                                        <button type="submit" class="bg-amber-500 text-white text-xs font-bold px-3 py-2 rounded-lg">Reject</button>
+                                    </form>
+                                <?php elseif ($b['status'] === 'approved'): ?>
+                                    <form method="POST" onsubmit="return confirm('Revoke approval?');">
+                                        <input type="hidden" name="booking_id" value="<?php echo $b['id']; ?>">
+                                        <input type="hidden" name="action" value="deapprove">
+                                        <button type="submit" class="bg-yellow-400 text-black text-xs font-bold px-3 py-2 rounded-lg">Deapprove</button>
+                                    </form>
+                                    <a href="../ticket/ticket.php?ref=<?php echo urlencode($b['booking_ref']); ?>" target="_blank"
+                                       class="bg-blue-600 text-white text-xs font-bold px-3 py-2 rounded-lg">Ticket</a>
+                                <?php else: ?>
+                                    <form method="POST" onsubmit="return confirm('Set back to pending?');">
+                                        <input type="hidden" name="booking_id" value="<?php echo $b['id']; ?>">
+                                        <input type="hidden" name="action" value="deapprove">
+                                        <button type="submit" class="bg-gray-500 text-white text-xs font-bold px-3 py-2 rounded-lg">Reset</button>
+                                    </form>
+                                <?php endif; ?>
+
+                                <form method="POST" onsubmit="return confirm('Permanently delete this record?');">
+                                    <input type="hidden" name="booking_id" value="<?php echo $b['id']; ?>">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button type="submit" class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-2 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+            <?php else: ?>
+                <div class="px-6 py-12 text-center text-gray-400">No booking requests found matching filters.</div>
+            <?php endif; ?>
         </div>
     </main>
 

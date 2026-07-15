@@ -26,8 +26,8 @@ try {
     die("Database error: " . $e->getMessage());
 }
 
-// QR Code URL via Google Charts API
-$qrUrl = "https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=" . urlencode($booking['booking_ref']) . "&choe=UTF-8";
+// QR Code URL via QRServer API
+$qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($booking['booking_ref']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
