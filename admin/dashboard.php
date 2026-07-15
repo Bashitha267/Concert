@@ -1,6 +1,45 @@
 <?php
 // admin/dashboard.php - Admin dashboard for managing tickets, approvals, and status filters
+session_start();
+
+// Guard: must be logged in
+if (empty($_SESSION['admin_logged_in'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once '../db.php';
+
+// Handle Edit Credentials
+$credSuccess = '';
+$credError = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_credentials') {
+    $newUsername = trim($_POST['new_username'] ?? '');
+    $newPassword = trim($_POST['new_password'] ?? '');
+    $confirmPassword = trim($_POST['confirm_password'] ?? '');
+
+    if (empty($newUsername)) {
+        $credError = 'Username cannot be empty.';
+    } elseif (!empty($newPassword) && $newPassword !== $confirmPassword) {
+        $credError = 'Passwords do not match.';
+    } else {
+        try {
+            $db = DB::getConnection();
+            if (!empty($newPassword)) {
+                $hashed = password_hash($newPassword, PASSWORD_BCRYPT);
+                $upStmt = $db->prepare("UPDATE users SET username = ?, password = ? WHERE id = ?");
+                $upStmt->execute([$newUsername, $hashed, $_SESSION['admin_id']]);
+            } else {
+                $upStmt = $db->prepare("UPDATE users SET username = ? WHERE id = ?");
+                $upStmt->execute([$newUsername, $_SESSION['admin_id']]);
+            }
+            $_SESSION['admin_username'] = $newUsername;
+            $credSuccess = 'Credentials updated successfully!';
+        } catch (Exception $e) {
+            $credError = 'Failed to update credentials: ' . $e->getMessage();
+        }
+    }
+}
 
 // Handle Action POST Requests (Approve, Deapprove, Reject, Delete)
 $action = $_POST['action'] ?? '';
@@ -178,19 +217,49 @@ try {
                 <span class="bg-white/10 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">Control Panel</span>
             </div>
             
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3 flex-wrap justify-center">
                 <a href="mark.php" class="bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-md">
                     Scanner (Mark Attendance)
                 </a>
                 <a href="../index.php" target="_blank" class="text-xs text-gray-300 hover:text-white transition-all">
                     View Live Site &rarr;
                 </a>
+                <button onclick="openCredModal()" class="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                    Edit Credentials
+                </button>
+                <a href="logout.php" class="flex items-center gap-1.5 bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                </a>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-8">
-        
+
+        <!-- Credential Success/Error banners -->
+        <?php if (!empty($credSuccess)): ?>
+            <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><?php echo htmlspecialchars($credSuccess); ?></span>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($credError)): ?>
+            <div class="mb-6 p-4 bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl flex items-center gap-3 text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span><?php echo htmlspecialchars($credError); ?></span>
+            </div>
+        <?php endif; ?>
+
         <!-- Status Feedback Toasts -->
         <?php if (!empty($actionSuccess)): ?>
             <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 text-sm">
@@ -446,6 +515,48 @@ try {
         </div>
     </div>
 
+    <!-- Edit Credentials Modal -->
+    <div id="credModal" class="fixed inset-0 z-50 items-center justify-center p-4 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeCredModal()"></div>
+        <div class="relative max-w-md w-full bg-white rounded-3xl p-8 shadow-2xl z-10">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-syne text-lg font-bold text-gray-900">Edit Admin Credentials</h3>
+                <button onclick="closeCredModal()" class="text-gray-400 hover:text-gray-900 bg-gray-100 p-2 rounded-full transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <form method="POST" action="dashboard.php">
+                <input type="hidden" name="action" value="update_credentials">
+
+                <div class="mb-4">
+                    <label class="block text-xs font-semibold text-violet-700 uppercase tracking-wider mb-1.5">New Username</label>
+                    <input type="text" name="new_username" value="<?php echo htmlspecialchars($_SESSION['admin_username'] ?? 'admin'); ?>" required
+                        class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-xs font-semibold text-violet-700 uppercase tracking-wider mb-1.5">New Password</label>
+                    <input type="password" name="new_password" placeholder="Leave blank to keep current"
+                        class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100">
+                    <p class="text-xs text-gray-400 mt-1">Leave empty to keep existing password.</p>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-xs font-semibold text-violet-700 uppercase tracking-wider mb-1.5">Confirm New Password</label>
+                    <input type="password" name="confirm_password" placeholder="Re-enter new password"
+                        class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
     <script>
         function viewReceipt(path, ref) {
             document.getElementById('receiptModalImg').src = path;
@@ -459,6 +570,20 @@ try {
 
         function closeReceipt() {
             const modal = document.getElementById('receiptModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function openCredModal() {
+            const modal = document.getElementById('credModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeCredModal() {
+            const modal = document.getElementById('credModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.body.classList.remove('overflow-hidden');

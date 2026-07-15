@@ -406,7 +406,15 @@ try {
             
             <div class="border-t border-white/5 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
                 <span>&copy; 2026 INZANITY HipHop Concert. All rights reserved.</span>
-                <span class="mt-2 sm:mt-0">Powered by Zanyinsane Productions</span>
+                <div class="flex items-center gap-4 mt-2 sm:mt-0">
+                    <span>Powered by Zanyinsane Productions</span>
+                    <a href="admin/login.php" class="inline-flex items-center gap-1.5 text-gray-600 hover:text-accentNeon transition-colors duration-200 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 group-hover:text-accentNeon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        System Login
+                    </a>
+                </div>
             </div>
         </div>
     </footer>

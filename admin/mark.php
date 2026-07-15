@@ -1,5 +1,13 @@
 <?php
 // admin/mark.php - QR Code scanner page for ticket verification and partial seat attendance tracking
+session_start();
+
+// Guard: must be logged in
+if (empty($_SESSION['admin_logged_in'])) {
+    header('Location: login.php');
+    exit;
+}
+
 require_once '../db.php';
 
 // Handle AJAX Request: Get Ticket Details
